@@ -1,4 +1,10 @@
-require_relative 'environment'
+set :root, File.dirname(__FILE__)
 
-#require app/controllers
-Dir.glob("app/controllers/*.rb") { |file| require_relative file }
+load_paths = [
+  "config/initializers/*.rb",
+  "app/controllers/*.rb"
+]
+
+load_paths.each do |path|
+  Dir.glob(path) { |file| require_relative file }
+end

@@ -1,3 +1,3 @@
 get '/' do
-  'hello'
+  haml :index
 end
