@@ -1,0 +1,4 @@
+.guess-details
+  = "Question: #{guess.question}"
+  %input{ name: "guesses[#{guess.id}][answer]", placeholder: 'Your answer:' }
+  %button.next-question-button{ value: 'Next Question', data_next_question: true }
