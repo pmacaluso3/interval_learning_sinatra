@@ -1,0 +1,6 @@
+- form_action = deck.persisted? ? "/decks/#{deck.id}" : '/decks'
+%form.deck-form{ method: 'POST', action: form_action }
+  - if deck.persisted?
+    %input{ type: 'hidden', name: '_method', value: 'PUT' }
+  %input{ name: 'deck[name]' }
+  %input{ type: 'submit', value: 'Submit' }

@@ -1,0 +1,8 @@
+.deck-details
+  %a.deck-name{ href: "/decks/#{deck.id}" }= deck.name
+  - if deck.created_by?(current_user)
+    %a.add-card-to-deck-link{ href: "/decks/#{deck.id}/cards/new" } Add a card
+    %a.edit-deck-link{ href: "/decks/#{deck.id}/edit" } Rename
+    %form.delete-deck-form{ method: 'POST', action: "/decks/#{deck.id}" }
+      %input{ type: 'hidden', name: '_method', value: 'DELETE' }
+      %input.delete-deck-button{ type: 'submit', value: 'Delete' }

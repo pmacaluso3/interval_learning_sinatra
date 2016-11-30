@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
+  has_many :created_decks, class_name: :Deck, foreign_key: :creator_id
   has_many :games, foreign_key: :player_id
-  has_many :decks, through: :games
+  has_many :played_decks, through: :games, source: :deck
   has_many :guesses
 
   include BCrypt
