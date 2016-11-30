@@ -7,7 +7,11 @@ gem 'rake'
 gem 'activerecord'
 gem 'pg'
 
-# TODO: put this in a dev/test group
-# and control environment.rb to only require them in those envs
-gem 'pry'
-gem 'shotgun'
+group :development, :test do
+  gem 'pry'
+  gem 'shotgun' #use `rackup config.ru` in production
+end
+
+group :test do
+  gem 'rspec'
+end

@@ -1,12 +1,8 @@
+require_relative 'config/environment'
+
 set :root, File.dirname(__FILE__)
 set :app_name, :interval_learning
 
-load_paths = %w(
-  config/environment
-  config/initializers/*.rb
-  app/controllers/*.rb
-)
+require_relative 'config/loader'
 
-load_paths.each do |path|
-  Dir.glob(path) { |file| require_relative file }
-end
+Sinatra::Application.run! if $0 == __FILE__
