@@ -3,8 +3,9 @@ source 'https://rubygems.org'
 gem 'sinatra'
 gem 'haml'
 gem 'rake'
-
+gem 'bcrypt'
 gem 'activerecord'
+gem 'sinatra-activerecord'
 gem 'pg'
 
 group :development, :test do

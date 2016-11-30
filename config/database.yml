@@ -1,0 +1,8 @@
+# development:
+#   adapter: postgresql
+#   database: development
+#   # username: <%= Sinatra::Application.app_name %>
+#   # password: <%= Sinatra::Application.app_name %>
+#   username: <%= Sinatra::Application.app_name %>
+#   password: <%= Sinatra::Application.app_name %>
+#   host: localhost

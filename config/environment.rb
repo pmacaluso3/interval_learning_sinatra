@@ -8,3 +8,4 @@ if [:development, :test].include? Sinatra::Application.environment
   require 'pry'
   require 'shotgun'
 end
+
