@@ -12,6 +12,6 @@ end
 
 namespace :db do
   task create: :default do
-    
+    binding.pry
   end
 end

@@ -1,4 +1,5 @@
 set :root, File.dirname(__FILE__)
+set :app_name, :interval_learning
 
 load_paths = %w(
   config/environment
