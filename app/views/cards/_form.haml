@@ -1,0 +1,7 @@
+- form_action = card.persisted? ? "/cards/#{card.id}" : '/cards'
+%form.card-form{ method: 'POST', action: form_action }
+  - if card.persisted?
+    %input{ type: 'hidden', name: '_method', value: 'PUT' }
+  %input{ name: 'card[question]', placeholder: 'Question', value: card.question }
+  %input{ name: 'card[answer]', placeholder: 'Answer', value: card.answer }
+  %input{ type: 'submit', value: 'Submit' }

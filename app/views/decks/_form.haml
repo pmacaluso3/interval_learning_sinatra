@@ -2,5 +2,5 @@
 %form.deck-form{ method: 'POST', action: form_action }
   - if deck.persisted?
     %input{ type: 'hidden', name: '_method', value: 'PUT' }
-  %input{ name: 'deck[name]' }
+  %input{ name: 'deck[name]', placeholder: 'Name', value: deck.name }
   %input{ type: 'submit', value: 'Submit' }
