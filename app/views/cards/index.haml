@@ -3,4 +3,4 @@
     %th Question
     %th Answer
   - @cards.each do |card|
-    = haml :'cards/_details', locals: { card: card }
+    = haml :'cards/_details', locals: { card: card }, layout: false

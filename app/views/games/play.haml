@@ -1,4 +1,4 @@
 %form.game-play{ action: "/games/#{game.id}", method: 'POST' }
   %input{ type: 'hidden', name: '_method', value: 'PUT' }
   - guesses.each do |guess|
-    = haml :'guesses/_guess_details', locals: { guess: guess }
+    = haml :'guesses/_guess_details', locals: { guess: guess }, layout: false

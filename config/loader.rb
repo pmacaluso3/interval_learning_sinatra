@@ -1,6 +1,8 @@
 load_paths = %w(
   config/initializers/*.rb
   app/controllers/*.rb
+  app/helpers/*.rb
+  app/models/*.rb
 )
 
 load_paths.each do |path|

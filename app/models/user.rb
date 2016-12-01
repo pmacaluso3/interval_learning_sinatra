@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   has_many :played_decks, through: :games, source: :deck
   has_many :guesses
 
+  validates :email, presence: true, uniqueness: true
+
   include BCrypt
 
   def password
@@ -13,7 +15,7 @@ class User < ActiveRecord::Base
 
   def password=(new_password)
     @password = Password.create(new_password)
-    password_digest = @password
+    self.password_digest = @password
   end
 
   def authenticate(test_password)
