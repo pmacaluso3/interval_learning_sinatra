@@ -1,2 +1,2 @@
 %h3.cta= "Editing a card in the deck: #{@deck.name}"
-= haml :'cards/_form', locals: { card: @card }, layout: false
+= haml :'cards/_form', locals: { card: @card, deck: @deck }, layout: false

@@ -1,5 +1,6 @@
 get '/decks/:deck_id/cards' do
-  @cards = Deck.find(params[:deck_id]).cards
+  @deck = Deck.find(params[:deck_id])
+  @cards = @deck.cards
   haml :'cards/index'
 end
 
@@ -10,6 +11,7 @@ get '/decks/:deck_id/cards/new' do
 end
 
 get '/decks/:deck_id/cards/:card_id/edit' do
+  @deck = Deck.find(params[:deck_id])
   @card = current_user.created_cards.find(params[:card_id])
   haml :'cards/edit'
 end

@@ -1,5 +1,11 @@
 .deck-details
-  %a.deck-name{ href: "/decks/#{deck.id}" }= deck.name
+  - if logged_in?
+    %a.deck-name{ href: "/decks/#{deck.id}" }= deck.name
+  - else
+    %span.deck-name= "#{deck.name} (login to play)"
+
+  %a{ href: "/decks/#{deck.id}/cards" } Study
+
   - if deck.created_by?(current_user)
     %a.add-card-to-deck-link{ href: "/decks/#{deck.id}/cards/new" } Add a card
     %a.edit-deck-link{ href: "/decks/#{deck.id}/edit" } Rename

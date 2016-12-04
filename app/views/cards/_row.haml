@@ -1,0 +1,11 @@
+%tr.cards-index-single-row
+  %td= card.question
+  %td= card.answer
+  - if deck.created_by?(current_user)
+    %td
+      %a{ href: "/decks/#{deck.id}/cards/#{card.id}/edit" } Edit
+    %td
+      %form{ action: "/decks/#{deck.id}/cards/#{card.id}", method: 'POST' }
+        %input{ type: 'hidden', name: '_method', value: 'DELETE' }
+        %input{ type: 'submit', value: 'Delete' }
+

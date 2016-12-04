@@ -14,6 +14,7 @@ get '/decks/:deck_id/edit' do
 end
 
 get '/decks/:deck_id' do
+  return redirect '/decks' if !logged_in?
   game = Game.where(
     player_id: current_user.id,
     deck_id: params[:deck_id]).first ||
@@ -25,14 +26,14 @@ get '/decks/:deck_id' do
   redirect "/games/#{game.id}"
 end
 
-put 'decks/:deck_id' do
+put '/decks/:deck_id' do
   deck = current_user.created_decks.find(params[:deck_id])
   deck.update(params[:deck])
 
   redirect '/decks'
 end
 
-delete 'decks/:deck_id' do
+delete '/decks/:deck_id' do
   deck = current_user.created_decks.find(params[:deck_id])
   deck.destroy
 
@@ -40,6 +41,7 @@ delete 'decks/:deck_id' do
 end
 
 post '/decks' do
+  return redirect '/decks' if !logged_in?
   Deck.create(params[:deck].merge(creator_id: current_user.id))
 
   redirect '/decks'

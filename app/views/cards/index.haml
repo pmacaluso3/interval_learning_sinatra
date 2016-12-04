@@ -1,6 +1,16 @@
-%table.cards-index
-  %tr.cards-index-header-row
-    %th Question
-    %th Answer
-  - @cards.each do |card|
-    = haml :'cards/_details', locals: { card: card }, layout: false
+%h3= "Cards in #{@deck.name}"
+- if @deck.created_by?(current_user)
+  %a{ href: "/decks/#{@deck.id}/cards/new" } Add a card to this deck
+
+- if @cards && @cards.any?
+  %table.cards-index
+    %tr.cards-index-header-row
+      %th Question
+      %th Answer
+      - if @deck.created_by?(current_user)
+        %th Edit
+        %th Delete
+    - @cards.each do |card|
+      = haml :'cards/_row', locals: { card: card, deck: @deck }, layout: false
+- else
+  %p.no-cards-message= "Doesn't look like #{@deck.name} has any cards"
