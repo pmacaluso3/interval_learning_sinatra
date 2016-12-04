@@ -19,6 +19,11 @@ class User < ActiveRecord::Base
   end
 
   def authenticate(test_password)
-    password == test_password
+    if password == test_password
+      true
+    else
+      self.errors.add(:password, 'Invalid login')
+      false
+    end
   end
 end
