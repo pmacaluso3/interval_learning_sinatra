@@ -7,7 +7,8 @@
     %script{ src: '/javascripts/app.js' }
 
   %body
-    %h1 welcome to interval learning
+    %h1
+      %a{ href: '/' } welcome to interval learning
 
     - if logged_in?
       %a{ href: 'decks/new' } Create a new deck

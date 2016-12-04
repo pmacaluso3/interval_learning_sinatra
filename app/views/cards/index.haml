@@ -1,4 +1,10 @@
-%h3= "Cards in #{@deck.name}"
+%h3
+  - if logged_in?
+    Cards in
+    %a{ href: "/decks/#{@deck.id}" }= @deck.name
+  - else
+    = "Cards in #{@deck.name} (login to play)"
+
 - if @deck.created_by?(current_user)
   %a{ href: "/decks/#{@deck.id}/cards/new" } Add a card to this deck
 
