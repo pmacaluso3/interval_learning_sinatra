@@ -1,5 +1,9 @@
 require_relative 'config/environment'
 
+require 'sass/plugin/rack'
+Sass::Plugin.options[:style] = :compressed
+use Sass::Plugin::Rack
+
 set :root, File.dirname(__FILE__)
 set :app_name, :interval_learning
 enable :sessions
