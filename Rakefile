@@ -18,4 +18,8 @@ namespace :db do
   task :migrate do
     ActiveRecord::Migrator.migrate(File.join(Sinatra::Application.root, 'db/migrate'))
   end
+
+  task :seed do
+    require_relative File.join(Sinatra::Application.root, 'db/seeds')
+  end
 end

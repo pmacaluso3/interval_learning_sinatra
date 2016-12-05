@@ -16,6 +16,8 @@ class Guess < ActiveRecord::Base
 
   scope :due_to_repeat, -> { repeat_at < Time.now }
 
+  validates :repeat_at, :times_correct, :game_id, :card_id, presence: true
+
   before_save :default_repeat_at # TODO: move to migration layer. may require manual sql execution in the migration file.
 
   def grade(answer)
