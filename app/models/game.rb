@@ -4,7 +4,16 @@ class Game < ActiveRecord::Base
   has_many :guesses
 
   def sync_guesses_with_deck
-    deck.cards.each do |card|
+    extant_card_ids = deck.cards.pluck(:id)
+    extant_guess_card_ids = guesses.pluck(:card_id)
+    card_ids_to_add = extant_card_ids - extant_guess_card_ids
+    card_ids_to_remove = extant_guess_card_ids - extant_card_ids
+    guesses.where(card_id: card_ids_to_remove).destroy_all
+    card_ids_to_add.each do |card_id|
+      Guess.create(game: self, card_id: card_id)
     end
+
+
+
   end
 end
