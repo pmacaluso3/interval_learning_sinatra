@@ -1,4 +1,5 @@
 %form.game-show{ action: "/games/#{@game.id}", method: 'POST' }
   %input{ type: 'hidden', name: '_method', value: 'PUT' }
   - @cards.each do |card|
-    = haml :'guesses/_guess_details', locals: { card: card }, layout: false
+    = haml :'cards/_quiz', locals: { card: card }, layout: false
+  %input{ type: 'submit', value: 'Complete game' }

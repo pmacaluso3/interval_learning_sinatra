@@ -4,6 +4,7 @@ class Game < ActiveRecord::Base
   has_many :guesses
 
   validates :player_id, :deck_id, presence: true
+  # TODO: validate uniqueness of deck_id within scope of user
 
   def sync_guesses_with_deck
     extant_card_ids = deck.cards.pluck(:id)

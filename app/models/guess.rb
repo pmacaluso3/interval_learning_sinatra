@@ -17,13 +17,16 @@ class Guess < ActiveRecord::Base
   scope :due_to_repeat, -> { repeat_at < Time.now }
 
   validates :repeat_at, :times_correct, :game_id, :card_id, presence: true
+  # TODO: validate uniqueness of card_id within scope of game
+  # TODO: validate that times_correct is one of the enumerated acceptable integers
 
   before_validation :default_repeat_at # TODO: move to migration layer. may require manual sql execution in the migration file.
 
   def grade(answer)
     times_correct_increment = card.check(answer) ? 1 : -1
-    times_correct += times_correct_increment
-    repeat_at += REPEAT_INTERVALS[times_correct]
+    self.times_correct += times_correct_increment
+    self.times_correct = [times_correct, 0].max
+    self.repeat_at += REPEAT_INTERVALS[times_correct]
     save
   end
 
