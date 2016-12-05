@@ -18,7 +18,7 @@ class Guess < ActiveRecord::Base
 
   validates :repeat_at, :times_correct, :game_id, :card_id, presence: true
 
-  before_save :default_repeat_at # TODO: move to migration layer. may require manual sql execution in the migration file.
+  before_validation :default_repeat_at # TODO: move to migration layer. may require manual sql execution in the migration file.
 
   def grade(answer)
     times_correct_increment = card.check(answer) ? 1 : -1

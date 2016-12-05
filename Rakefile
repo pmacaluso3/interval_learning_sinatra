@@ -23,3 +23,7 @@ namespace :db do
     require_relative File.join(Sinatra::Application.root, 'db/seeds')
   end
 end
+
+task :console do
+  binding.pry
+end
