@@ -1,0 +1,10 @@
+- if @games && @games.any?
+  %table.games-index
+    %tr.games-index-header-row
+      %th Deck
+      %th Last Played At
+      %th Mastery Level
+    - @games.each do |game|
+      = haml :'games/_row', locals: { game: game }, layout: false
+- else
+  %p.no-games-message Ya got no games son

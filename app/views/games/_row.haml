@@ -1,0 +1,5 @@
+%tr.games-index-single-row
+  %td
+    %a{ href: "/games/#{game.id}" }= game.deck.name
+  %td= game.last_played_at
+  %td= game.mastery_level

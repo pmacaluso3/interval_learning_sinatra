@@ -18,3 +18,8 @@ put '/games/:game_id' do
   # this shows last played at, mastery level, a play button, and a link to my deck dashboard
   redirect "/decks/#{deck.id}/games/#{game.id}"
 end
+
+get '/decks/:deck_id/games' do
+  @games = current_user.games.includes(:deck).order('last_played_at DESC')
+  haml :'games/index'
+end
