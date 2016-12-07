@@ -14,7 +14,7 @@ class Guess < ActiveRecord::Base
   belongs_to :game
   belongs_to :card
 
-  scope :due_to_repeat, -> { repeat_at < Time.now }
+  scope :due_to_repeat, -> { where('repeat_at < ?', Time.now) }
 
   validates :repeat_at, :times_correct, :game_id, :card_id, presence: true
   # TODO: validate uniqueness of card_id within scope of game

@@ -31,4 +31,8 @@ class Game < ActiveRecord::Base
   def ensure_last_played_at
     self.last_played_at ||= (created_at || Time.now)
   end
+
+  def due_to_repeat?
+    guesses.due_to_repeat.any?
+  end
 end
