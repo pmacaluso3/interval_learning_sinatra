@@ -1,4 +1,4 @@
-.card-quiz
-  = "Question: #{card.question}"
-  %input{ name: "cards[#{card.id}][answer]", placeholder: 'Your answer:' }
-  %button.next-question-button{ data_next_question: true } Go On
+.card-quiz{ data: { answer: card.answer } }
+  %p.card-quiz-question= "Question: #{card.question}"
+  %input.card-quiz-answer{ name: "cards[#{card.id}][answer]", placeholder: 'Your answer:' }
+  %button.next-question-button{ data: { next_question: true } } Go On
