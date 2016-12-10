@@ -1,6 +1,6 @@
-%form.game-show{ action: "/games/#{@game.id}", method: 'POST' }
+%form#game-show{ action: "/games/#{@game.id}", method: 'POST' }
   %input{ type: 'hidden', name: '_method', value: 'PUT' }
   - @cards.each do |card|
     = haml :'cards/_quiz', locals: { card: card }, layout: false
   %button#next-question-button{ data: { next_question: true } } Go On
-  %input{ type: 'submit', value: 'Complete game' }
+  %input#conclude-game-button{ type: 'submit', value: 'Complete game' }

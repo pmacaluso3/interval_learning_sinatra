@@ -4,6 +4,6 @@
     %span.card-quiz-correctness-icon.card-quiz-correct-icon YES
     %span.card-quiz-correctness-icon.card-quiz-incorrect-icon NO
   .card-quiz-rule.blue-rule
-    %input.card-quiz-submitted-answer{ name: "cards[#{card.id}][answer]", placeholder: 'Answer' }
+    %input.card-quiz-submitted-answer{ data: { card_id: card.id }, name: "cards[#{card.id}][answer]", placeholder: 'Answer' }
     %span.card-quiz-incorrect-answer-bucket
     %span.card-quiz-correct-answer= card.answer

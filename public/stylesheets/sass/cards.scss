@@ -18,6 +18,7 @@
     font-size: 2em;
     width: 100%;
     margin-left: -16px;
+    height: 1em;
 
     &.pink-rule {
       border-bottom: solid pink 4px;
@@ -70,4 +71,8 @@
   &.card-quiz-hidden {
     display: none;
   }
+}
+
+.cards-index {
+  // TODO style study mode
 }

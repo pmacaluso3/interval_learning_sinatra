@@ -1,40 +1,24 @@
 var CardQueue = function(cards) {
   this.upcomingCards = cards;
   this.currentCard = cards.splice(0,1)[0];
-  this.currentCard.moveToCurrent();
+  this.currentCard.markAsCurrent();
   this.previousCard = null;
   this.finishedCards = [];
 }
 
-// CardQueue.prototype.report = function () {
-//   console.log('upcoming cards: ')
-//   this.upcomingCards.forEach(function(card){console.log(card.question)})
-
-//   console.log('current card: ' + this.currentCard.question);
-
-//   if (this.previousCard) {
-//     console.log('previous card: ' + this.previousCard.question);
-//   } else {
-//     console.log('no previous card');
-//   }
-
-//   console.log('finished cards: ')
-//   this.finishedCards.forEach(function(card){console.log(card.question)})
-// }
-
 CardQueue.prototype.advance = function() {
   if (this.previousCard) {
-    this.previousCard.hideCard();
+    this.previousCard.markAsFinished();
     this.finishedCards.push(this.previousCard);
   }
 
-  this.currentCard.moveToPrevious();
+  this.currentCard.markAsPrevious();
   this.currentCard.check();
   this.previousCard = this.currentCard;
 
   var newCurrentCard = this.upcomingCards.splice(0,1)[0]
   if (newCurrentCard) {
-    newCurrentCard.moveToCurrent();
+    newCurrentCard.markAsCurrent();
     this.currentCard = newCurrentCard;
   } else {
     this.concludeGame();
@@ -42,9 +26,36 @@ CardQueue.prototype.advance = function() {
 }
 
 CardQueue.prototype.concludeGame = function() {
-  // TODO implement
-  // send all answers for competed cards to server
-  console.log('concluding game');
+  var $form  = $('#game-show'),
+      url    = $form.attr('action'),
+      method = $form.find('input[name=_method]').attr('value'),
+      data   = this.dataToSubmit()
+
+  $.ajax({
+    url: url,
+    method: method,
+    data: data
+  })
+  .done(function(response) {
+    $(document).find('body').html(response);
+  })
+}
+
+CardQueue.prototype.dataToSubmit = function() {
+  var outputData = { cards: {} }
+  for (var i = 0; i < this.cardsToSubmit().length; i++) {
+    var card = this.cardsToSubmit()[i];
+    outputData.cards[card.cardId()] = { answer: card.submittedAnswer() }
+  }
+  return outputData;
+}
+
+CardQueue.prototype.cardsToSubmit = function() {
+  if (this.previousCard) {
+    return this.finishedCards.concat([this.previousCard])
+  } else {
+    return this.finishedCards
+  }
 }
 
 var Card = function(cardDom) {
@@ -65,6 +76,10 @@ Card.prototype.check = function() {
   }
 }
 
+Card.prototype.cardId = function () {
+  return this.$cardDom.find('.card-quiz-submitted-answer').data('card-id')
+}
+
 Card.prototype.submittedAnswer = function() {
   return this.$cardDom.find('.card-quiz-submitted-answer').val();
 }
@@ -75,17 +90,17 @@ Card.prototype.stripClasses = function() {
   }
 }
 
-Card.prototype.moveToCurrent = function() {
+Card.prototype.markAsCurrent = function() {
   this.stripClasses();
   this.$cardDom.addClass('card-quiz-current');
 }
 
-Card.prototype.moveToPrevious = function() {
+Card.prototype.markAsPrevious = function() {
   this.stripClasses();
   this.$cardDom.addClass('card-quiz-previous');
 }
 
-Card.prototype.hideCard = function() {
+Card.prototype.markAsFinished = function() {
   this.stripClasses();
   this.$cardDom.addClass('card-quiz-hidden');
 }
@@ -111,11 +126,16 @@ $(function() {
     cards.push(new Card($cardDoms[i]));
   }
   var cq = new CardQueue(cards);
-  // allow enter-button submission
-  // refocus on answer input after submission
   $('#next-question-button').on('click', function(event) {
     event.preventDefault();
     cq.advance();
+    // TODO refocus on answer input after submission
+    // TODO reset timer
+  })
+
+  $('#conclude-game-button').on('click', function(event) {
+    event.preventDefault();
+    cq.concludeGame();    
   })
   // TODO: timer
 })
