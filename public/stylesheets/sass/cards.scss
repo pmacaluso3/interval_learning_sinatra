@@ -1,7 +1,17 @@
 .card-quiz {
+  border: solid black 1px;
   padding: 1em;
   text-align: left;
   background-color: #fff; //TODO make off-white like an index card
+
+  .card-quiz-correctness-icon {
+    display: none;
+    float: right;
+  }
+
+  .card-quiz-correct-answer {
+    display: none;
+  }
 
   .card-quiz-rule {
     padding: 0.5em;
@@ -19,19 +29,42 @@
   }
 
   &.card-quiz-current {
-    border: solid black 1px;
     width: 80%;
     margin-left: 10%;
-
   }
 
   &.card-quiz-previous {
-    border: solid black 1px;
     width: 74%;
     margin-left: 13%;
     margin-bottom: 0;
     // TODO shadow the bottom of the box
     // so it looks like it's behind the current card
+
+    .card-quiz-submitted-answer {
+      display: none;
+    }
+
+    .card-quiz-correct-answer {
+      display: inline-block;
+    }
+
+    &.correct {
+      .card-quiz-correct-icon {
+        display: inline-block;
+      }
+    }
+
+    &.incorrect {
+      .card-quiz-incorrect-icon {
+        display: inline-block;
+      }
+
+      .card-quiz-correct-answer {
+        float: right;
+        clear: both;
+      }
+
+    }
   }
 
   &.card-quiz-hidden {

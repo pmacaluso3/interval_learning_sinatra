@@ -43,14 +43,15 @@ CardQueue.prototype.advance = function() {
 
 CardQueue.prototype.concludeGame = function() {
   // TODO implement
+  // send all answers for competed cards to server
   console.log('concluding game');
 }
 
 var Card = function(cardDom) {
   this.$cardDom = $(cardDom);
   this.question = this.$cardDom.find('.card-quiz-question').text();
-  this.correctAnswer = this.$cardDom.data('answer'); // TODO: bake this into the dom so it can be revealed when .correct is applied
-  this.$incorrectAnswerBucket = this.$cardDom.find('.incorrect-answer-bucket')
+  this.correctAnswer = this.$cardDom.find('.card-quiz-correct-answer').text(); // TODO: bake this into the dom so it can be revealed when .correct is applied
+  this.$incorrectAnswerBucket = this.$cardDom.find('.card-quiz-incorrect-answer-bucket')
   this.CLASSES_TO_STRIP = ['card-quiz-hidden',
                            'card-quiz-current',
                            'card-quiz-previous'];
@@ -65,7 +66,7 @@ Card.prototype.check = function() {
 }
 
 Card.prototype.submittedAnswer = function() {
-  return this.$cardDom.find('.card-quiz-answer').val();
+  return this.$cardDom.find('.card-quiz-submitted-answer').val();
 }
 
 Card.prototype.stripClasses = function() {
@@ -116,4 +117,5 @@ $(function() {
     event.preventDefault();
     cq.advance();
   })
+  // TODO: timer
 })

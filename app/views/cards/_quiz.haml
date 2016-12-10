@@ -1,5 +1,9 @@
-.card-quiz.card-quiz-hidden{ data: { answer: card.answer } }
+.card-quiz.card-quiz-hidden
   .card-quiz-rule.pink-rule
     %span.card-quiz-question= card.question
+    %span.card-quiz-correctness-icon.card-quiz-correct-icon YES
+    %span.card-quiz-correctness-icon.card-quiz-incorrect-icon NO
   .card-quiz-rule.blue-rule
-    %input.card-quiz-answer{ name: "cards[#{card.id}][answer]", placeholder: 'Answer' }
+    %input.card-quiz-submitted-answer{ name: "cards[#{card.id}][answer]", placeholder: 'Answer' }
+    %span.card-quiz-incorrect-answer-bucket
+    %span.card-quiz-correct-answer= card.answer
