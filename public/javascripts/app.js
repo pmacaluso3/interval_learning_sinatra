@@ -6,21 +6,21 @@ var CardQueue = function(cards) {
   this.finishedCards = [];
 }
 
-CardQueue.prototype.report = function () {
-  console.log('upcoming cards: ')
-  this.upcomingCards.forEach(function(card){console.log(card.question)})
+// CardQueue.prototype.report = function () {
+//   console.log('upcoming cards: ')
+//   this.upcomingCards.forEach(function(card){console.log(card.question)})
 
-  console.log('current card: ' + this.currentCard.question);
+//   console.log('current card: ' + this.currentCard.question);
 
-  if (this.previousCard) {
-    console.log('previous card: ' + this.previousCard.question);
-  } else {
-    console.log('no previous card');
-  }
+//   if (this.previousCard) {
+//     console.log('previous card: ' + this.previousCard.question);
+//   } else {
+//     console.log('no previous card');
+//   }
 
-  console.log('finished cards: ')
-  this.finishedCards.forEach(function(card){console.log(card.question)})
-}
+//   console.log('finished cards: ')
+//   this.finishedCards.forEach(function(card){console.log(card.question)})
+// }
 
 CardQueue.prototype.advance = function() {
   if (this.previousCard) {
@@ -42,6 +42,7 @@ CardQueue.prototype.advance = function() {
 }
 
 CardQueue.prototype.concludeGame = function() {
+  // TODO implement
   console.log('concluding game');
 }
 
@@ -111,7 +112,7 @@ $(function() {
   var cq = new CardQueue(cards);
   // allow enter-button submission
   // refocus on answer input after submission
-  $('.next-question-button').on('click', function(event) {
+  $('#next-question-button').on('click', function(event) {
     event.preventDefault();
     cq.advance();
   })

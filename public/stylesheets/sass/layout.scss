@@ -1,0 +1,60 @@
+body {
+  background-color: #ccc;
+
+  .delete-link {
+    font-family: 'Times';
+    color: maroon;
+    text-decoration: underline;
+    font-size: 1em;
+    padding: 0;
+    border: none;
+    background-color: #ccc;
+
+    &:hover {
+      cursor: auto; // TODO fix this
+    }
+  }
+
+  .nav-head {
+    height: 5em;
+    border-bottom: solid maroon 5px;
+
+
+    .logo {
+      display: inline-block;
+      margin-right: 1em;
+      
+      .logo-header {
+        font-size: 3em;
+        text-transform: uppercase;
+      }
+    }
+
+    .nav-contents {
+      display: inline-block;
+      text-align: -webkit-left;
+
+      .new-deck-link {
+        color: maroon;
+      }
+
+      .login-form, .new-user-form {
+        border: solid black 1px;
+        border-radius: 5px;
+        padding: 5px;
+        margin: 1px;
+
+      }
+    }
+  }
+
+  .container {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 1%;
+    padding-top: 1em;
+    text-align: center;
+    border: 1px gray dashed;
+    display: inline-block;
+  }
+}

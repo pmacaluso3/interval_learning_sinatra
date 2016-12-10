@@ -1,15 +1,19 @@
 / TODO: make this a table like cards and games indcies
-.deck-details
-  - if logged_in?
-    %a.deck-name{ href: "/decks/#{deck.id}" }= deck.name
-  - else
-    %span.deck-name= "#{deck.name} (login to play)"
+%tr.deck-details
+  %td
+    - if logged_in?
+      %a.deck-name{ href: "/decks/#{deck.id}" }= deck.name
+    - else
+      %span.deck-name= "#{deck.name} (login to play)"
+  %td
+    %a{ href: "/decks/#{deck.id}/cards" } Study
 
-  %a{ href: "/decks/#{deck.id}/cards" } Study
-
-  - if deck.created_by?(current_user)
-    %a.add-card-to-deck-link{ href: "/decks/#{deck.id}/cards/new" } Add a card
-    %a.edit-deck-link{ href: "/decks/#{deck.id}/edit" } Rename
-    %form.delete-deck-form{ method: 'POST', action: "/decks/#{deck.id}" }
-      %input{ type: 'hidden', name: '_method', value: 'DELETE' }
-      %input.delete-deck-button{ type: 'submit', value: 'Delete' }
+  %td
+    - if deck.created_by?(current_user)
+      %a.add-card-to-deck-link{ href: "/decks/#{deck.id}/cards/new" } Add a card
+      %a.edit-deck-link{ href: "/decks/#{deck.id}/edit" } Rename
+      %form.delete-deck-form{ method: 'POST', action: "/decks/#{deck.id}" }
+        %input{ type: 'hidden', name: '_method', value: 'DELETE' }
+        %input.delete-link{ type: 'submit', value: 'Delete' }
+    - else
+      You don't own this deck

@@ -1,0 +1,40 @@
+.card-quiz {
+  padding: 1em;
+  text-align: left;
+  background-color: #fff; //TODO make off-white like an index card
+
+  .card-quiz-rule {
+    padding: 0.5em;
+    font-size: 2em;
+    width: 100%;
+    margin-left: -16px;
+
+    &.pink-rule {
+      border-bottom: solid pink 4px;
+    }
+
+    &.blue-rule {
+      border-bottom: solid blue 2px;
+    }
+  }
+
+  &.card-quiz-current {
+    border: solid black 1px;
+    width: 80%;
+    margin-left: 10%;
+
+  }
+
+  &.card-quiz-previous {
+    border: solid black 1px;
+    width: 74%;
+    margin-left: 13%;
+    margin-bottom: 0;
+    // TODO shadow the bottom of the box
+    // so it looks like it's behind the current card
+  }
+
+  &.card-quiz-hidden {
+    display: none;
+  }
+}

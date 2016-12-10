@@ -1,4 +1,5 @@
-.card-quiz{ data: { answer: card.answer } }
-  %p.card-quiz-question-statment Question:
-  %span.card-quiz-question= card.question
-  %input.card-quiz-answer{ name: "cards[#{card.id}][answer]", placeholder: 'Your answer:' }
+.card-quiz.card-quiz-hidden{ data: { answer: card.answer } }
+  .card-quiz-rule.pink-rule
+    %span.card-quiz-question= card.question
+  .card-quiz-rule.blue-rule
+    %input.card-quiz-answer{ name: "cards[#{card.id}][answer]", placeholder: 'Answer' }

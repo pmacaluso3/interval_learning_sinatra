@@ -7,5 +7,5 @@
     %td
       %form{ action: "/decks/#{deck.id}/cards/#{card.id}", method: 'POST' }
         %input{ type: 'hidden', name: '_method', value: 'DELETE' }
-        %input{ type: 'submit', value: 'Delete' }
+        %input.delete-link{ type: 'submit', value: 'Delete' }
 
