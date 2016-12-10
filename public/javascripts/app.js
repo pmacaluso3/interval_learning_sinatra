@@ -1,23 +1,49 @@
 var CardQueue = function(cards) {
   this.upcomingCards = cards;
-  this.finshedCards = [];
+  this.currentCard = cards.splice(0,1)[0];
+  this.currentCard.moveToCurrent();
   this.previousCard = null;
-  this.currentCard = cards.splice(0,1);
+  this.finishedCards = [];
+}
+
+CardQueue.prototype.report = function () {
+  console.log('upcoming cards: ')
+  this.upcomingCards.forEach(function(card){console.log(card.question)})
+
+  console.log('current card: ' + this.currentCard.question);
+
+  if (this.previousCard) {
+    console.log('previous card: ' + this.previousCard.question);
+  } else {
+    console.log('no previous card');
+  }
+
+  console.log('finished cards: ')
+  this.finishedCards.forEach(function(card){console.log(card.question)})
 }
 
 CardQueue.prototype.advance = function() {
-  this.previousCard.hideCard();
-  this.finishedCards.push(this.previousCard);
+  if (this.previousCard) {
+    this.previousCard.hideCard();
+    this.finishedCards.push(this.previousCard);
+  }
 
   this.currentCard.moveToPrevious();
   this.currentCard.check();
   this.previousCard = this.currentCard;
 
-  var newCurrentCard = this.upcomingCards.splice(0,1)
-  newCurrentCard.moveToCurrent();
-  this.currentCard = newCurrentCard;
+  var newCurrentCard = this.upcomingCards.splice(0,1)[0]
+  if (newCurrentCard) {
+    newCurrentCard.moveToCurrent();
+    this.currentCard = newCurrentCard;
+  } else {
+    this.concludeGame();
+  }
 }
 
+CardQueue.prototype.concludeGame = function() {
+  console.log('concluding game');
+}
 
 var Card = function(cardDom) {
   this.$cardDom = $(cardDom);
@@ -38,7 +64,7 @@ Card.prototype.check = function() {
 }
 
 Card.prototype.submittedAnswer = function() {
-  this.$cardDom.find('.card-quiz-answer').val();
+  return this.$cardDom.find('.card-quiz-answer').val();
 }
 
 Card.prototype.stripClasses = function() {
@@ -74,18 +100,19 @@ Card.prototype.markIncorrect = function() {
 $(function() {
   var cards = [];
   var $cardDoms = $('.card-quiz');
+
+  if ($cardDoms.length === 0) {
+    return null
+  }
+
   for (var i = 0; i < $cardDoms.length; i++) {
     cards.push(new Card($cardDoms[i]));
   }
   var cq = new CardQueue(cards);
-
   // allow enter-button submission
   // refocus on answer input after submission
   $('.next-question-button').on('click', function(event) {
     event.preventDefault();
-    $card = $(event.delegateTarget).closest('.card-quiz');
-    answer = $card.data('answer');
-    // debugger
-
+    cq.advance();
   })
 })

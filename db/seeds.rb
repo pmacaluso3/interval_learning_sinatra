@@ -8,6 +8,7 @@ deck = Deck.create(name: 'German Vocab', creator: user)
 
 Card.create(question: 'dog', answer: 'der Hund', creator: user, deck: deck)
 Card.create(question: 'cat', answer: 'die Katze', creator: user, deck: deck)
+Card.create(question: 'child', answer: 'das Kind', creator: user, deck: deck)
 
 game = Game.create(player: user, deck: deck)
 game.sync_guesses_with_deck
