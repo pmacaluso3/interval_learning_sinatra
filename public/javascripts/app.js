@@ -124,7 +124,7 @@ Card.prototype.markIncorrect = function() {
 
 GameTimer = function(maxSeconds, selector) {
   if (maxSeconds === undefined) {
-    maxSeconds = 1;
+    maxSeconds = 5;
   }
   if (selector === undefined) {
     selector = '#game-timer';
