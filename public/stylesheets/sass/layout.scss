@@ -1,5 +1,5 @@
 body {
-  background-color: #ccc;
+  background-color: #ddd;
 
   .delete-link {
     font-family: 'Times';
@@ -8,10 +8,10 @@ body {
     font-size: 1em;
     padding: 0;
     border: none;
-    background-color: #ccc;
+    background-color: #ddd;
 
     &:hover {
-      cursor: auto; // TODO fix this
+      cursor: pointer;
     }
   }
 

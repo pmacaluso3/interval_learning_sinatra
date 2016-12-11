@@ -2,7 +2,7 @@
   border: solid black 1px;
   padding: 1em;
   text-align: left;
-  background-color: #fff; //TODO make off-white like an index card
+  background-color: #F0F0E0;
 
   .card-quiz-correctness-icon {
     display: none;
@@ -31,12 +31,12 @@
 
   &.card-quiz-current {
     width: 80%;
-    margin-left: 10%;
+    margin-left: 15%;
   }
 
   &.card-quiz-previous {
     width: 74%;
-    margin-left: 13%;
+    margin-left: 18%;
     margin-bottom: 0;
     // TODO shadow the bottom of the box
     // so it looks like it's behind the current card

@@ -19,6 +19,7 @@ CardQueue.prototype.advance = function() {
   var newCurrentCard = this.upcomingCards.splice(0,1)[0]
   if (newCurrentCard) {
     newCurrentCard.markAsCurrent();
+    newCurrentCard.focusOnInput();
     this.currentCard = newCurrentCard;
   } else {
     this.concludeGame();
@@ -61,12 +62,16 @@ CardQueue.prototype.cardsToSubmit = function() {
 var Card = function(cardDom) {
   this.$cardDom = $(cardDom);
   this.question = this.$cardDom.find('.card-quiz-question').text();
-  this.correctAnswer = this.$cardDom.find('.card-quiz-correct-answer').text(); // TODO: bake this into the dom so it can be revealed when .correct is applied
+  this.correctAnswer = this.$cardDom.find('.card-quiz-correct-answer').text();
   this.$incorrectAnswerBucket = this.$cardDom.find('.card-quiz-incorrect-answer-bucket')
   this.CLASSES_TO_STRIP = ['card-quiz-hidden',
                            'card-quiz-current',
                            'card-quiz-previous'];
 };
+
+Card.prototype.focusOnInput = function() {
+  this.$cardDom.find('.card-quiz-submitted-answer').focus();
+}
 
 Card.prototype.check = function() {
   if (this.submittedAnswer() === this.correctAnswer) {
@@ -114,6 +119,38 @@ Card.prototype.markIncorrect = function() {
   this.$cardDom.addClass('incorrect');
 }
 
+GameTimer = function(callback, seconds, selector) {
+  if (seconds === undefined) {
+    seconds = 5;
+  }
+  if (selector === undefined) {
+    selector = '#game-timer';
+  }
+  this.callback = callback;  
+  this.seconds = seconds;
+  this.$timerDom = $(selector);
+}
+
+GameTimer.prototype.startTimer = function() {
+  this.$timerDom.text(this.seconds);
+  setInterval(this.countDown.bind(this), 1000);
+}
+
+GameTimer.prototype.countDown = function() {
+  this.seconds --;
+  if (this.seconds === 0) {
+    this.callback();
+  }
+  this.$timerDom.text(this.seconds);
+}
+
+GameTimer.prototype.resetTimer = function(seconds) {
+  if (seconds === undefined) {
+    seconds = 5;
+  }
+  this.seconds = seconds;
+}
+
 $(function() {
   var cards = [];
   var $cardDoms = $('.card-quiz');
@@ -125,17 +162,22 @@ $(function() {
   for (var i = 0; i < $cardDoms.length; i++) {
     cards.push(new Card($cardDoms[i]));
   }
+
   var cq = new CardQueue(cards);
+  var timer = new GameTimer(function() {
+    cq.advance.bind(cq)();
+    timer.resetTimer()
+  })
+  timer.startTimer();
+
   $('#next-question-button').on('click', function(event) {
     event.preventDefault();
     cq.advance();
-    // TODO refocus on answer input after submission
-    // TODO reset timer
+    timer.resetTimer();
   })
 
   $('#conclude-game-button').on('click', function(event) {
     event.preventDefault();
-    cq.concludeGame();    
+    cq.concludeGame();
   })
-  // TODO: timer
 })
