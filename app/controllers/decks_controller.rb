@@ -15,6 +15,7 @@ end
 
 get '/decks/:deck_id' do
   return redirect '/decks' if !logged_in?
+  return redirect '/decks' if Deck.find(params[:deck_id]).cards.empty?
   game = Game.where(
     player_id: current_user.id,
     deck_id: params[:deck_id]).first ||

@@ -33,4 +33,8 @@ class Guess < ActiveRecord::Base
   def default_repeat_at
     self.repeat_at ||= Time.now
   end
+
+  def due_to_repeat?
+    repeat_at < Time.now
+  end
 end

@@ -1,4 +1,4 @@
-module DecksHelpers
+module GamesHelpers
   def recently_played_games
     current_user.games
                 .includes(:deck, :guesses)
@@ -6,4 +6,4 @@ module DecksHelpers
   end
 end
 
-helpers DecksHelpers
+helpers GamesHelpers

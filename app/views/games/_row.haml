@@ -1,6 +1,9 @@
 %tr.games-index-single-row
   %td
-    %a{ href: "/games/#{game.id}" }= game.deck.name
+    - if game.due_to_repeat?
+      %a{ href: "/games/#{game.id}" }= game.deck.name
+    - else
+      = game.deck.name
   %td= game.last_played_at
   %td= game.mastery_level
   %td= game.due_to_repeat? ? 'Yes' : 'No'

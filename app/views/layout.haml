@@ -13,7 +13,8 @@
         %a.logo-header{ href: '/' } welcome to interval learning
       .nav-contents
         - if logged_in?
-          %a.new-deck-link{ href: 'decks/new' } Create a new deck
+          %a.recently-played-games-link{ href: '/games' } My recent games
+          %a.new-deck-link{ href: '/decks/new' } Create a new deck
           %form.logout-form{ method: 'POST', action: '/sessions' }
             %input{ type: 'hidden', name: '_method', value: 'DELETE' }
             %input.delete-link{ type: 'submit', value: 'Logout' }
