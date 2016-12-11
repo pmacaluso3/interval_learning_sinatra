@@ -1,9 +1,10 @@
-var CardQueue = function(cards) {
+var CardQueue = function(cards, timer) {
   this.upcomingCards = cards;
   this.currentCard = cards.splice(0,1)[0];
   this.currentCard.markAsCurrent();
   this.previousCard = null;
   this.finishedCards = [];
+  this.timer = timer;
 }
 
 CardQueue.prototype.advance = function() {
@@ -27,6 +28,8 @@ CardQueue.prototype.advance = function() {
 }
 
 CardQueue.prototype.concludeGame = function() {
+  this.timer.stopTimer.bind(this.timer)();
+
   var $form  = $('#game-show'),
       url    = $form.attr('action'),
       method = $form.find('input[name=_method]').attr('value'),
@@ -119,21 +122,27 @@ Card.prototype.markIncorrect = function() {
   this.$cardDom.addClass('incorrect');
 }
 
-GameTimer = function(callback, seconds, selector) {
-  if (seconds === undefined) {
-    seconds = 5;
+GameTimer = function(maxSeconds, selector) {
+  if (maxSeconds === undefined) {
+    maxSeconds = 1;
   }
   if (selector === undefined) {
     selector = '#game-timer';
   }
-  this.callback = callback;  
-  this.seconds = seconds;
+  this.callback = null;  
+  this.maxSeconds = maxSeconds;
+  this.seconds = this.maxSeconds;
   this.$timerDom = $(selector);
+  this.interval = null
+}
+
+GameTimer.prototype.setCallback = function(callback) {
+  this.callback = callback;
 }
 
 GameTimer.prototype.startTimer = function() {
   this.$timerDom.text(this.seconds);
-  setInterval(this.countDown.bind(this), 1000);
+  this.interval = setInterval(this.countDown.bind(this), 1000);
 }
 
 GameTimer.prototype.countDown = function() {
@@ -144,11 +153,12 @@ GameTimer.prototype.countDown = function() {
   this.$timerDom.text(this.seconds);
 }
 
-GameTimer.prototype.resetTimer = function(seconds) {
-  if (seconds === undefined) {
-    seconds = 5;
-  }
-  this.seconds = seconds;
+GameTimer.prototype.resetTimer = function() {
+  this.seconds = this.maxSeconds;
+}
+
+GameTimer.prototype.stopTimer = function() {
+  window.clearInterval(this.interval);
 }
 
 $(function() {
@@ -163,11 +173,14 @@ $(function() {
     cards.push(new Card($cardDoms[i]));
   }
 
-  var cq = new CardQueue(cards);
-  var timer = new GameTimer(function() {
+  var timer = new GameTimer();
+  var cq = new CardQueue(cards, timer);
+
+  timer.setCallback(function() {
     cq.advance.bind(cq)();
-    timer.resetTimer()
-  })
+    timer.resetTimer();
+  });
+
   timer.startTimer();
 
   $('#next-question-button').on('click', function(event) {
@@ -180,4 +193,6 @@ $(function() {
     event.preventDefault();
     cq.concludeGame();
   })
+
+  window.onbeforeunload = timer.stopTimer.bind(timer)
 })
