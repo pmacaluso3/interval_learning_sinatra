@@ -22,6 +22,12 @@ namespace :db do
   task :seed do
     require_relative File.join(Sinatra::Application.root, 'db/seeds')
   end
+
+  task :clear do
+    [User, Deck, Card, Game, Guess].each do |klass|
+      klass.destroy_all
+    end
+  end
 end
 
 task :console do
