@@ -7,5 +7,9 @@ require 'sass'
 
 # required in prod to run console task
 require 'pry'
-require 'shotgun'
+
+if [:development, :test].include? Sinatra::Application.environment
+  # use `rackup config.ru` in prod
+  require 'shotgun'
+end
 
