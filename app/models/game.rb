@@ -33,6 +33,7 @@ class Game < ActiveRecord::Base
   end
 
   def due_to_repeat?
-    guesses.all? { |guess| !guess.due_to_repeat? }
+    return false if guesses.empty?
+    guesses.any? { |guess| guess.due_to_repeat? }
   end
 end
