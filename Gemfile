@@ -9,8 +9,9 @@ gem 'activerecord'
 gem 'sinatra-activerecord'
 gem 'pg'
 
+# included in prod for console task
+gem 'pry'
 group :development, :test do
-  gem 'pry'
   gem 'shotgun' #use `rackup config.ru` in production
 end
 

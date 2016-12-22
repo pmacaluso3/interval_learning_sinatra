@@ -9,7 +9,7 @@
   #cards-index-new-card-form= haml :'cards/_form', locals: { card: Card.new, deck: @deck }, layout: false
 
 - if @cards && @cards.any?
-  %table#cards-index
+  %table
     %tr.cards-index-header-row
       %th Question
       %th Answer
