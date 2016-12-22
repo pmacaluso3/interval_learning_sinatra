@@ -1,12 +1,11 @@
 get '/decks/:deck_id/cards' do
   @deck = Deck.find(params[:deck_id])
-  @cards = @deck.cards
+  @cards = @deck.cards.order('created_at DESC')
   haml :'cards/index'
 end
 
 get '/decks/:deck_id/cards/new' do
   @deck = current_user.created_decks.find(params[:deck_id])
-  @card = Card.new
   haml :'cards/new'
 end
 
@@ -17,9 +16,14 @@ get '/decks/:deck_id/cards/:card_id/edit' do
 end
 
 post '/decks/:deck_id/cards' do
-  Card.create(params[:card].merge(creator_id: current_user.id, deck_id: params[:deck_id]))
+  card = Card.create(params[:card].merge(creator_id: current_user.id, deck_id: params[:deck_id]))
 
-  redirect "/decks/#{params[:deck_id]}/cards"
+  if request.xhr?
+    haml :'cards/_row', locals: { card: card, deck: Deck.find(params[:deck_id]) }, layout: false
+  else
+    redirect "/decks/#{params[:deck_id]}/cards"
+  end
+
 end
 
 put '/decks/:deck_id/cards/:card_id' do
@@ -33,5 +37,5 @@ delete '/decks/:deck_id/cards/:card_id' do
   card = current_user.created_cards.find(params[:card_id])
   card.destroy
 
-  redirect "/decks/#{params[:deck_id]}/cards"  
+  redirect "/decks/#{params[:deck_id]}/cards"
 end

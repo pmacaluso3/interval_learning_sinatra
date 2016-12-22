@@ -6,10 +6,10 @@
     = "Cards in #{@deck.name} (login to play)"
 
 - if @deck.created_by?(current_user)
-  %a{ href: "/decks/#{@deck.id}/cards/new" } Add a card to this deck
+  #cards-index-new-card-form= haml :'cards/_form', locals: { card: Card.new, deck: @deck }, layout: false
 
 - if @cards && @cards.any?
-  %table.cards-index
+  %table#cards-index
     %tr.cards-index-header-row
       %th Question
       %th Answer

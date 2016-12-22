@@ -5,9 +5,7 @@ require 'rake'
 require 'bcrypt'
 require 'sass'
 
-# TODO: how do I set RACK_ENV for a single command like in rails?
-if [:development, :test].include? Sinatra::Application.environment
-  require 'pry'
-  require 'shotgun'
-end
+# required in prod to run console task
+require 'pry'
+require 'shotgun'
 

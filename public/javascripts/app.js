@@ -129,7 +129,7 @@ GameTimer = function(maxSeconds, selector) {
   if (selector === undefined) {
     selector = '#game-timer';
   }
-  this.callback = null;  
+  this.callback = null;
   this.maxSeconds = maxSeconds;
   this.seconds = this.maxSeconds;
   this.$timerDom = $(selector);
@@ -165,34 +165,49 @@ $(function() {
   var cards = [];
   var $cardDoms = $('.card-quiz');
 
-  if ($cardDoms.length === 0) {
-    return null
+  if ($cardDoms.length !== 0) {
+    for (var i = 0; i < $cardDoms.length; i++) {
+      cards.push(new Card($cardDoms[i]));
+    }
+
+    var timer = new GameTimer();
+    var cq = new CardQueue(cards, timer);
+
+    timer.setCallback(function() {
+      cq.advance.bind(cq)();
+      timer.resetTimer();
+    });
+
+    timer.startTimer();
+
+    $('#next-question-button').on('click', function(event) {
+      event.preventDefault();
+      cq.advance();
+      timer.resetTimer();
+    })
+
+    $('#conclude-game-button').on('click', function(event) {
+      event.preventDefault();
+      cq.concludeGame();
+    })
+
+    window.onbeforeunload = timer.stopTimer.bind(timer);
   }
 
-  for (var i = 0; i < $cardDoms.length; i++) {
-    cards.push(new Card($cardDoms[i]));
-  }
-
-  var timer = new GameTimer();
-  var cq = new CardQueue(cards, timer);
-
-  timer.setCallback(function() {
-    cq.advance.bind(cq)();
-    timer.resetTimer();
-  });
-
-  timer.startTimer();
-
-  $('#next-question-button').on('click', function(event) {
+  $('#cards-index-new-card-form .card-form').on('submit', function(event) {
     event.preventDefault();
-    cq.advance();
-    timer.resetTimer();
-  })
+    var $form = $(event.delegateTarget);
+    var url = $form.attr('action')
+    var method = $form.find('[name=_method]').attr('value') || $form.attr('method')
 
-  $('#conclude-game-button').on('click', function(event) {
-    event.preventDefault();
-    cq.concludeGame();
+    $.ajax({
+      url: url,
+      method: method,
+      data: $form.serialize()
+    }).done(function(response) {
+      $('.cards-index-single-row').first().before(response);
+      $('#cards-index-new-card-form .card-form').trigger('reset');
+      $('#refocus-input').focus();
+    })
   })
-
-  window.onbeforeunload = timer.stopTimer.bind(timer)
 })
