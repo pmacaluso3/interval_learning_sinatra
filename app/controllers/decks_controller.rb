@@ -38,7 +38,7 @@ delete '/decks/:deck_id' do
   deck = current_user.created_decks.find(params[:deck_id])
   deck.destroy
 
-  redirect '/decks'  
+  redirect '/decks'
 end
 
 post '/decks' do
