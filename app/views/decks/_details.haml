@@ -4,6 +4,9 @@
       %a.deck-name{ href: "/decks/#{deck.id}" }= deck.name
     - else
       %span.deck-name= "#{deck.name} (login to play)"
+
+  %td= deck.game_for_user(current_user).try(:due_to_repeat?) ? 'Yes' : 'No'
+
   %td
     %a{ href: "/decks/#{deck.id}/cards" } Study
 

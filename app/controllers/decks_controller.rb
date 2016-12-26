@@ -1,5 +1,5 @@
 get '/decks' do
-  @decks = Deck.all.alphabetically
+  @decks = Deck.all.alphabetically.includes(:games)
   haml :'decks/index'
 end
 

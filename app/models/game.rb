@@ -25,7 +25,7 @@ class Game < ActiveRecord::Base
     current_points = guesses.reduce(0) do |total, guess|
       total + guess.times_correct
     end
-    (current_points.to_f / total_possible_points).round(2)
+    (current_points.to_f / total_possible_points).round(2) * 100
   end
 
   def ensure_last_played_at

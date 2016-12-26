@@ -1,6 +1,6 @@
 get '/decks/:deck_id/cards' do
   @deck = Deck.find(params[:deck_id])
-  @cards = @deck.cards.order('created_at DESC')
+  @cards = @deck.cards.study_order
   haml :'cards/index'
 end
 

@@ -5,5 +5,5 @@
     - else
       = game.deck.name
   %td= game.last_played_at
-  %td= game.mastery_level
+  %td= "#{game.mastery_level}%"
   %td= game.due_to_repeat? ? 'Yes' : 'No'

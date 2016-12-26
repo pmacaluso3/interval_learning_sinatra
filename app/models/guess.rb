@@ -3,12 +3,11 @@ class Guess < ActiveRecord::Base
   HOURS_IN_A_DAY = 24
   REPEAT_INTERVALS = {
     0 => 0,
-    1 => 1*SECONDS_IN_AN_HOUR,
-    2 => 12*SECONDS_IN_AN_HOUR,
-    3 => 24*SECONDS_IN_AN_HOUR,
-    4 => 2*HOURS_IN_A_DAY*SECONDS_IN_AN_HOUR,
-    5 => 3*HOURS_IN_A_DAY*SECONDS_IN_AN_HOUR,
-    6 => 5*HOURS_IN_A_DAY*SECONDS_IN_AN_HOUR
+    1 => 1*HOURS_IN_A_DAY*SECONDS_IN_AN_HOUR,
+    2 => 2*HOURS_IN_A_DAY*SECONDS_IN_AN_HOUR,
+    3 => 3*HOURS_IN_A_DAY*SECONDS_IN_AN_HOUR,
+    4 => 5*HOURS_IN_A_DAY*SECONDS_IN_AN_HOUR,
+    5 => 7*HOURS_IN_A_DAY*SECONDS_IN_AN_HOUR
   }
 
   belongs_to :game
@@ -30,11 +29,12 @@ class Guess < ActiveRecord::Base
     save
   end
 
-  def default_repeat_at
-    self.repeat_at ||= Time.now
-  end
-
   def due_to_repeat?
     repeat_at < Time.now
+  end
+
+  private
+  def default_repeat_at
+    self.repeat_at ||= Time.now
   end
 end
