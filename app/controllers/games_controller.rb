@@ -16,7 +16,7 @@ get '/games/:game_id' do
   p "the time is #{Time.now}"
   @cards.each do |card|
     guess = card.guess_for_game(@game)
-    p "repeat_at: #{guess.repeat_at}, due_to_repeat: #{guess.due_to_repeat}"
+    p "repeat_at: #{guess.repeat_at}, due_to_repeat: #{guess.due_to_repeat?}"
   end
   haml :'games/show'
 end
