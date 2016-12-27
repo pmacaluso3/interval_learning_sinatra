@@ -25,7 +25,7 @@ class Guess < ActiveRecord::Base
     times_correct_increment = card.check(answer) ? 1 : -1
     self.times_correct += times_correct_increment
     self.times_correct = [times_correct, 0].max
-    self.repeat_at += REPEAT_INTERVALS[times_correct]
+    self.repeat_at = Time.now + REPEAT_INTERVALS[times_correct]
     save
   end
 
