@@ -5,5 +5,7 @@
     - else
       = game.deck.name
   %td= game.last_played_at
-  %td= "#{game.mastery_level}%"
+  %td= "#{game.mastery_level.round(2) * 100}%"
+  %td
+    %a{ href: "/decks/#{game.deck.id}/cards" } Study
   %td= game.due_to_repeat? ? 'Yes' : 'No'

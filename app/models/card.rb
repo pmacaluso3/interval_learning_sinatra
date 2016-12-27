@@ -11,11 +11,11 @@ class Card < ActiveRecord::Base
     answer == test_answer
   end
 
-  def guess_for_user(user)
-    if user.class == User
-      guesses.find_by(player_id: user.id)
-    elsif user.class == Fixnum
-      guesses.find_by(player_id: user)
+  def guess_for_game(game)
+    if game.class == Game
+      guesses.find_by(game_id: game.id)
+    elsif game.class == Fixnum
+      guesses.find_by(game_id: game)
     end
   end
 end

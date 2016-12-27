@@ -32,7 +32,7 @@ CardQueue.prototype.concludeGame = function() {
 
   var $form  = $('#game-show'),
       url    = $form.attr('action'),
-      method = $form.find('input[name=_method]').attr('value'),
+      method = $form.find('input[name=_method]').attr('value') || $form.attr('method'),
       data   = this.dataToSubmit()
 
   $.ajax({

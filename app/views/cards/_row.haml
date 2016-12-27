@@ -1,7 +1,7 @@
 %tr.cards-index-single-row
   %td= card.question
   %td= card.answer
-  %td= card.guess_for_user(current_user).times_correct
+  %td= card.guess_for_game(game).times_correct
   - if deck.created_by?(current_user)
     %td
       %a{ href: "/decks/#{deck.id}/cards/#{card.id}/edit" } Edit

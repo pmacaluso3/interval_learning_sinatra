@@ -1,5 +1,6 @@
 get '/decks/:deck_id/cards' do
   @deck = Deck.find(params[:deck_id])
+  @game = @deck.game_for_user(current_user)
   @cards = @deck.cards.study_order
   haml :'cards/index'
 end

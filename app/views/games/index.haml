@@ -4,6 +4,7 @@
       %th Deck
       %th Last Played At
       %th Mastery Level
+      %th Study
       %th Due to repeat?
     - @games.each do |game|
       = haml :'games/_row', locals: { game: game }, layout: false

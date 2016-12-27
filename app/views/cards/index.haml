@@ -18,6 +18,6 @@
         %th Edit
         %th Delete
     - @cards.each do |card|
-      = haml :'cards/_row', locals: { card: card, deck: @deck }, layout: false
+      = haml :'cards/_row', locals: { card: card, deck: @deck, game: @game }, layout: false
 - else
   %p.no-cards-message= "Doesn't look like #{@deck.name} has any cards"
