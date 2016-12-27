@@ -18,4 +18,15 @@ class Card < ActiveRecord::Base
       guesses.find_by(game_id: game)
     end
   end
+
+  # this does an extra lookup but may be more straightforward than guess_for_game
+  def guess_for_user(user)
+    if user.class == User
+      game = Game.find_by(user: user, deck: deck)
+      Guess.find_by(game: game, user: user)
+    elsif user.class == Fixnum
+      game = Game.find_by(user_id: user.id, deck: deck)
+      Guess.find_by(game: game, user_id: user.id)
+    end
+  end
 end
