@@ -33,3 +33,16 @@ end
 task :console do
   binding.pry
 end
+
+desc 'Set all guesses for a game to 0 times_correct. Pass in game_id as arg.'
+task :reset_game do
+  # this keeps rake from failing when running the number as a task
+  ARGV.each { |arg| task arg.to_sym do ; end }
+
+  game_to_reset = Game.find(ARGV[1])
+  game_to_reset.guesses.each do |guess|
+    guess.times_correct = 0
+    guess.repeat_at = Time.now
+    guess.save
+  end
+end
